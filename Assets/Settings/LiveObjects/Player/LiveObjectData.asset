@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b42e5c451acc9499c8fcadcfaa25c3, type: 3}
+  m_Name: LiveObjectData
+  m_EditorClassIdentifier: 
+  _title: Player
+  _prefab: {fileID: 1430327926642770127, guid: 0fede357b0eb7df47b2756ed36d5565f, type: 3}
+  _sprite: {fileID: -1530161791, guid: 80685e7cab5de7440beab00a10b51f05, type: 3}
+  _liveComponentDatas:
+  - {fileID: 11400000, guid: 106203af5d40a1b46ae61bd87cc79a79, type: 2}
+  - {fileID: 11400000, guid: 70fa3d79dd526af43afd36c22101e2f9, type: 2}
+  - {fileID: 11400000, guid: 769cbe8eeae221f469383e333c3b04f4, type: 2}
+  - {fileID: 11400000, guid: 694708632b78eeb4fbc29a4ca359b5be, type: 2}

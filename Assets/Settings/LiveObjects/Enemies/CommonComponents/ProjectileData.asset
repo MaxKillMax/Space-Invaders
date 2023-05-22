@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb250237d3cb324d92c8e452633ba70, type: 3}
+  m_Name: ProjectileData
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 5460968836097589942, guid: d00f2dd479cc0384e9a85333c0bc0a22, type: 3}
+  _sprite: {fileID: -696537009, guid: 80685e7cab5de7440beab00a10b51f05, type: 3}
+  _healthAction:
+    Amount: -10
+    TargetTeamIndexs: 00000000
+  _speedMultiply: {x: 0, y: 15}
+  _lifeTime: 5

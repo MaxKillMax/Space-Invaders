@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f152d784d949a743b753aa169db3273, type: 3}
+  m_Name: AttackData
+  m_EditorClassIdentifier: 
+  Priority: 0
+  _projectileData: {fileID: 11400000, guid: 512568e54563f0542acf425d24bb786e, type: 2}
+  _shootClipPack: {fileID: 11400000, guid: 3bab8196acf49074a8547ffbca61ece9, type: 2}
