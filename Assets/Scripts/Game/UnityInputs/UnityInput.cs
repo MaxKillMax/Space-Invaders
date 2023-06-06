@@ -1,16 +1,10 @@
-using System;
-using UnityEngine;
-using UnityEngine.Assertions;
-
 namespace SpaceInvaders.UInputs
 {
     /// <summary>
-    /// UnityInput. Contain events on different inputs (as facade)
+    /// Contain events on different inputs (as facade)
     /// </summary>
     public class UnityInput
     {
-        private static UnityInput Instance;
-
         /// <summary>
         /// Alternative for Unity Update method
         /// </summary>
@@ -20,13 +14,6 @@ namespace SpaceInvaders.UInputs
 
         public static float Horizontal { get; private set; }
         public static float Vertical { get; private set; }
-
-        public UnityInput()
-        {
-            Assert.IsNull(Instance);
-
-            Instance = this;
-        }
 
         public void Update()
         {
