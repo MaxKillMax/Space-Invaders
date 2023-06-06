@@ -42,7 +42,7 @@ namespace SpaceInvaders.Interfaces
 
     public partial class Interface
     {
-        private static List<Interface> Objects = new();
+        private static readonly List<Interface> Objects = new();
 
         public static void Initialize() => Objects.ForEach((i) => i.OnInitialize());
     }

@@ -1,4 +1,3 @@
-using SpaceInvaders.Controllers.Players;
 using SpaceInvaders.Interfaces;
 using SpaceInvaders.Interfaces.GameInterfaces;
 using SpaceInvaders.Scores;
@@ -11,8 +10,6 @@ namespace SpaceInvaders
 {
     public class Game : MonoBehaviour
     {
-        private static Game Instance;
-
         [SerializeField] private Sound _sound;
         [SerializeField] private Backgrounds.Background _background;
         [SerializeField] private GameInterface _gameInterface;
@@ -22,57 +19,22 @@ namespace SpaceInvaders
         private Score _score;
         private UInput _input;
 
-        private void Awake()
+        private void Start()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            InitializeSystems();
+            Subscribe();
 
-            Instance = this;
-            DontDestroyOnLoad(this);
-
-            _input = new();
-            _score = new();
-
-            _sound.Initialize();
-            _background.Initialize();
-            Interface.Initialize();
-            _player.Initialize();
-
-            #region Subscribes
-            _score.OnUpdated += () => _gameInterface.SetScore(_score.Current());
-            _waveHandler.OnWaveIndexChanged += () => _gameInterface.SetWave(_waveHandler.WaveIndex + 1);
-            _player.OnHealthChanged += () => _gameInterface.SetHealth(_player.Health, _player.MaxHealth);
-            _player.OnDestroyed += Restart;
-            _waveHandler.OnEnemyDestroyed += _score.Add;
-            _waveHandler.OnDestroyed += Start;
-            _waveHandler.OnPathEndReached += Restart;
-            UInput.OnEscDown += Application.Quit;
-            #endregion
+            _waveHandler.LaunchNewWave();
         }
 
         private void OnDestroy()
         {
-            #region Unsubscribes
-            _score.OnUpdated -= () => _gameInterface.SetScore(_score.Current());
-            _waveHandler.OnWaveIndexChanged -= () => _gameInterface.SetWave(_waveHandler.WaveIndex + 1);
-            _player.OnHealthChanged -= () => _gameInterface.SetHealth(_player.Health, _player.MaxHealth);
-            _player.OnDestroyed -= Restart;
-            _waveHandler.OnEnemyDestroyed -= _score.Add;
-            _waveHandler.OnDestroyed -= Start;
-            _waveHandler.OnPathEndReached -= Restart;
-            UInput.OnEscDown -= Application.Quit;
-            #endregion
+            Unsubscribe();
         }
 
-        /// <summary>
-        /// Start new wave (first wave or next)
-        /// </summary>
-        private void Start()
+        private void Update()
         {
-            _waveHandler.LaunchNewWave();
+            _input.Update();
         }
 
         /// <summary>
@@ -81,14 +43,48 @@ namespace SpaceInvaders
         private void Restart()
         {
             _score.Clear();
-            _waveHandler.ResetIndex();
+            _waveHandler.ResetCounter();
             _player.Initialize();
-            Start();
+            _waveHandler.LaunchNewWave();
         }
 
-        private void Update()
+        private void InitializeSystems()
         {
-            _input.Update();
+            _input = new();
+            _score = new();
+
+            _sound.Initialize();
+            _background.Initialize();
+            Interface.Initialize();
+            _player.Initialize();
+        }
+
+        private void Subscribe()
+        {
+            _waveHandler.OnWaveCountChanged += () => _gameInterface.SetWave(_waveHandler.CountOfWaves + 1);
+            _score.OnUpdated += () => _gameInterface.SetScore(_score.Current);
+            _player.OnHealthChanged += () => _gameInterface.SetHealth(_player.Health, _player.MaxHealth);
+
+            _player.OnDestroyed += Restart;
+            _waveHandler.OnWaveEnemyDestroyed += () => _score.Add(1);
+            _waveHandler.OnWaveDestroyed += Start;
+            _waveHandler.OnWavePathEndReached += Restart;
+
+            UInput.OnEscDown += Application.Quit;
+        }
+
+        private void Unsubscribe()
+        {
+            _waveHandler.OnWaveCountChanged -= () => _gameInterface.SetWave(_waveHandler.CountOfWaves + 1);
+            _score.OnUpdated -= () => _gameInterface.SetScore(_score.Current);
+            _player.OnHealthChanged -= () => _gameInterface.SetHealth(_player.Health, _player.MaxHealth);
+
+            _player.OnDestroyed -= Restart;
+            _waveHandler.OnWaveEnemyDestroyed -= () => _score.Add(1);
+            _waveHandler.OnWaveDestroyed -= _waveHandler.LaunchNewWave;
+            _waveHandler.OnWavePathEndReached -= Restart;
+
+            UInput.OnEscDown -= Application.Quit;
         }
     }
 }

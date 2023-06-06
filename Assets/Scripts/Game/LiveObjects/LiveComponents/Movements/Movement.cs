@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.LiveObjects.LiveComponents.Movements
 {
+    /// <summary>
+    /// Moves the LiveObject in the direction of
+    /// </summary>
     public class Movement : LiveComponent
     {
         private Rigidbody2D _rigidbody;

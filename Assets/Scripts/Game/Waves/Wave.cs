@@ -23,21 +23,10 @@ namespace SpaceInvaders.Waves
         public Wave(WaveConstructData data)
         {
             _path = data.Path;
-            _liveObjectPacks = new(data.LiveObjects.Length);
             _shootDelay = data.ShootDelay;
 
-            for (int i = 0; i < data.LiveObjects.Length; i++)
-            {
-                WaveLiveObjectData pack = new(data.LiveObjects[i]) { PathIndex = i };
-                pack.LiveObject.transform.position = _path[i];
-                pack.LiveObject.transform.name += i.ToString();
-
-                pack.TargetTracking.OnTargetReaching += () => MoveToNextPoint(pack);
-                pack.Health.OnDestroyed += () => Remove(pack);
-
-                MoveToNextPoint(pack);
-                _liveObjectPacks.Add(pack);
-            }
+            WaveEnemiesConfigurator configurator = new(data.Path, data.LiveObjects, onConfigured: MoveToNextPoint, onTargetReaching: MoveToNextPoint, onDestroyed: Remove);
+            _liveObjectPacks = configurator.Configure();
 
             UInput.OnUpdate += WaitForShoot;
         }

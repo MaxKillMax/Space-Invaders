@@ -8,6 +8,9 @@ using UnityEngine.Assertions;
 
 namespace SpaceInvaders.Waves
 {
+    /// <summary>
+    /// Packed enemy LiveObject for Waves
+    /// </summary>
     [Serializable]
     public class WaveLiveObjectData
     {

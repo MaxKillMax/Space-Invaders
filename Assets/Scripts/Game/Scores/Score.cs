@@ -2,29 +2,28 @@ using System;
 
 namespace SpaceInvaders.Scores
 {
+    /// <summary>
+    /// Provides methods, properties, and events for working with integer value
+    /// </summary>
     public class Score
     {
         public event Action OnUpdated;
 
-        private int _value;
+        public int Current { get; private set; } = 0;
 
-        public int Current() => _value;
-
-        public void Add()
+        public void Add(int value)
         {
-            _value++;
-            OnUpdated?.Invoke();
-        }
+            Current += value;
 
-        public void Remove()
-        {
-            _value--;
+            if (Current < 0)
+                Current = 0;
+
             OnUpdated?.Invoke();
         }
 
         public void Clear()
         {
-            _value = 0;
+            Current = 0;
             OnUpdated?.Invoke();
         }
     }

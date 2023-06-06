@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.Projectiles
 {
+    /// <summary>
+    /// A projectile flying in the direction and reacting to enemy LiveObjects
+    /// </summary>
     [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(SpriteRenderer)), RequireComponent(typeof(Collider2D))]
     public class Projectile : MonoBehaviour
     {

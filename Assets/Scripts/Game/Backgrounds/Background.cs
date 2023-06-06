@@ -13,6 +13,7 @@ namespace SpaceInvaders.Backgrounds
         public void Initialize()
         {
             _transform = transform;
+
             UInput.OnUpdate += MoveSprite;
         }
 

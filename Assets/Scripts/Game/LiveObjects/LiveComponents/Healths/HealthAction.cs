@@ -2,6 +2,9 @@
 
 namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
 {
+    /// <summary>
+    /// The data you need to interact with health
+    /// </summary>
     [Serializable]
     public struct HealthAction
     {

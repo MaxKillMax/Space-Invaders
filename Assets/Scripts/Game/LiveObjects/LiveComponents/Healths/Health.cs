@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
 {
+    /// <summary>
+    /// Indicates that the LiveObject may die
+    /// </summary>
     public class Health : LiveComponent
     {
         public event Action OnDestroyed;

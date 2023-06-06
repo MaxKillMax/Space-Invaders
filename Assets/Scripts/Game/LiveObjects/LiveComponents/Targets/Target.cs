@@ -1,5 +1,8 @@
 ﻿namespace SpaceInvaders.LiveObjects.LiveComponents.Targets
 {
+    /// <summary>
+    /// Identifies the LiveObject as a target
+    /// </summary>
     public class Target : LiveComponent
     {
         public uint TeamIndex { get; private set; }

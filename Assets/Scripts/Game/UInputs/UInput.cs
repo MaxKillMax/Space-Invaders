@@ -5,14 +5,14 @@ using UnityEngine.Assertions;
 namespace SpaceInvaders.UInputs
 {
     /// <summary>
-    /// UnityInput. Contain events on different inputs (facade)
+    /// UnityInput. Contain events on different inputs (as facade)
     /// </summary>
     public class UInput
     {
         private static UInput Instance;
 
         /// <summary>
-        /// Alternative for Update method
+        /// Alternative for Unity Update method
         /// </summary>
         public static event Action OnUpdate;
         public static event Action OnLmbDown;

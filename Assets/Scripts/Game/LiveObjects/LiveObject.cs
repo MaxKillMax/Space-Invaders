@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.LiveObjects
 {
+    /// <summary>
+    /// LiveObject is a container of LiveComponents
+    /// </summary>
     [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(SpriteRenderer)), RequireComponent(typeof(Collider2D))]
     public class LiveObject : MonoBehaviour
     {

@@ -36,23 +36,38 @@ namespace SpaceInvaders.Controllers.Players
         public void Initialize()
         {
             if (_liveObject != null)
-                Destroy(_liveObject.gameObject);
+                return;
 
+            CreateLiveObject();
+
+            Assert.IsTrue(_attack != default && _movement != default && _health != default);
+
+            Subscribe();
+        }
+
+        private void CreateLiveObject()
+        {
             _liveObject = _liveObjectData.Create(_parent, _position);
 
             _attack = _liveObject.GetLiveComponent<Attack>();
             _movement = _liveObject.GetLiveComponent<Movement>();
             _health = _liveObject.GetLiveComponent<Health>();
+        }
 
+        private void OnDestroy()
+        {
+            Unsubscribe();
+        }
+
+        private void Subscribe()
+        {
             _health.OnDestroyed += () => OnDestroyed?.Invoke();
             _health.OnChanged += () => OnHealthChanged?.Invoke();
-
-            Assert.IsTrue(_attack != default && _movement != default && _health != default);
 
             OnHealthChanged?.Invoke();
         }
 
-        private void OnDestroy()
+        private void Unsubscribe()
         {
             UInput.OnUpdate -= Move;
             UInput.OnLmbDown -= () => _attack?.Launch();

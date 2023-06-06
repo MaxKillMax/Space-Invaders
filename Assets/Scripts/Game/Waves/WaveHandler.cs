@@ -3,37 +3,43 @@ using UnityEngine;
 
 namespace SpaceInvaders.Waves
 {
+    /// <summary>
+    /// Keeps track of the current wave and tracks its events
+    /// </summary>
     public class WaveHandler : MonoBehaviour
     {
-        public event Action OnWaveIndexChanged;
-        public event Action OnPathEndReached;
-        public event Action OnEnemyDestroyed;
-        public event Action OnDestroyed;
+        public event Action OnWaveCountChanged;
+        public event Action OnWavePathEndReached;
+        public event Action OnWaveEnemyDestroyed;
+        public event Action OnWaveDestroyed;
 
         [SerializeField] private Transform _parent;
         [SerializeField] private WaveData[] _waveDatas;
 
         private Wave Wave { get; set; }
-        public int WaveIndex { get; private set; } = -1;
+        public int CountOfWaves { get; private set; } = -1;
 
         public void LaunchNewWave()
         {
             TryDestroyWave();
 
-            WaveIndex++;
-            int index = WaveIndex % _waveDatas.Length;
+            CountOfWaves++;
+            int index = CountOfWaves % _waveDatas.Length;
             Wave = _waveDatas[index].Create(_parent);
 
-            Wave.OnDestroyed += OnWaveDestroy;
-            Wave.OnEnemyDestroyed += () => OnEnemyDestroyed?.Invoke();
-            Wave.OnPathEndReached += () => OnPathEndReached?.Invoke();
+            Subscribe();
 
-            OnWaveIndexChanged?.Invoke();
+            OnWaveCountChanged?.Invoke();
         }
 
-        public void ResetIndex() => WaveIndex = -1;
+        private void Subscribe()
+        {
+            Wave.OnDestroyed += () => OnWaveDestroyed?.Invoke();
+            Wave.OnEnemyDestroyed += () => OnWaveEnemyDestroyed?.Invoke();
+            Wave.OnPathEndReached += () => OnWavePathEndReached?.Invoke();
+        }
 
-        private void OnWaveDestroy() => OnDestroyed?.Invoke();
+        public void ResetCounter() => CountOfWaves = -1;
 
         private void OnDestroy() => TryDestroyWave();
 
@@ -42,9 +48,17 @@ namespace SpaceInvaders.Waves
             if (Wave == null)
                 return;
 
-            Wave.OnDestroyed -= OnWaveDestroy;
+            Unsubscrie();
+
             Wave.Destroy();
             Wave = null;
+        }
+
+        private void Unsubscrie()
+        {
+            Wave.OnDestroyed -= () => OnWaveDestroyed?.Invoke();
+            Wave.OnEnemyDestroyed -= () => OnWaveEnemyDestroyed?.Invoke();
+            Wave.OnPathEndReached -= () => OnWavePathEndReached?.Invoke();
         }
     }
 }

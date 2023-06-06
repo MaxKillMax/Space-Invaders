@@ -2,6 +2,9 @@ using System;
 
 namespace SpaceInvaders.LiveObjects.LiveComponents
 {
+    /// <summary>
+    /// Represents the specific logic of a LiveObject
+    /// </summary>
     [Serializable]
     public abstract class LiveComponent
     {

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.Sounds
 {
+    /// <summary>
+    /// Sound source
+    /// </summary>
     [RequireComponent(typeof(AudioSource))]
     public class Player : MonoBehaviour
     {

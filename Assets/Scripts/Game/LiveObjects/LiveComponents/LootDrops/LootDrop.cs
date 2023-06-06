@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops
 {
+    /// <summary>
+    /// After death LiveObject can drop the loot with some chance
+    /// </summary>
     public class LootDrop : LiveComponent
     {
         private Transform _origin;

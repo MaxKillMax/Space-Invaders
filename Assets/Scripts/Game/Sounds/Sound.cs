@@ -20,10 +20,14 @@ namespace SpaceInvaders.Sounds
             Instance = this;
         }
 
-        public static void Play(Vector3 point, ClipPack pack)
+        public static void PlayOnPoint(Vector3 point, ClipPack pack)
         {
             Player player = Instantiate(Instance._prefab, point, Quaternion.identity, Instance._parent);
             player.Initialize(pack);
         }
+
+        // PlayGlobal
+
+        // PlayOnTransform
     }
 }

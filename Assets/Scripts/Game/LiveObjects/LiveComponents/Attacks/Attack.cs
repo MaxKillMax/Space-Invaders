@@ -25,7 +25,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.Attacks
 
         public void Launch()
         {
-            Sound.Play(_originTransform.position, _shootClipPack);
+            Sound.PlayOnPoint(_originTransform.position, _shootClipPack);
 
             Projectile projectile = _projectileData.Create(_originTransform.parent, _originTransform.position);
             projectile.Direction = _originTransform.up;
