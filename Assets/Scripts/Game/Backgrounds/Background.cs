@@ -14,12 +14,12 @@ namespace SpaceInvaders.Backgrounds
         {
             _transform = transform;
 
-            UInput.OnUpdate += MoveSprite;
+            UnityInput.OnUpdate += MoveSprite;
         }
 
         private void OnDestroy()
         {
-            UInput.OnUpdate -= MoveSprite;
+            UnityInput.OnUpdate -= MoveSprite;
         }
 
         private void MoveSprite()

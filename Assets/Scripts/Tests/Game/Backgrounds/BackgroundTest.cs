@@ -13,7 +13,7 @@ namespace SpaceInvadersTest.Backgrounds
         public IEnumerator Background_Rotate5Seconds_RotatesOn5Degrees()
         {
             // Arrange
-            UInput input = new();
+            UnityInput input = new();
             Background background = new GameObject().AddComponent<Background>();
 
             float time = 5;

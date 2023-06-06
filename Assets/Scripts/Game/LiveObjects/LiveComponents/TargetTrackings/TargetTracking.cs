@@ -24,14 +24,14 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings
 
         public void Track(Vector2 destination)
         {
-            UInput.OnUpdate += CheckDistance;
+            UnityInput.OnUpdate += CheckDistance;
 
             _destination = destination;
         }
 
         public void StopTrack()
         {
-            UInput.OnUpdate -= CheckDistance;
+            UnityInput.OnUpdate -= CheckDistance;
         }
 
         private void CheckDistance()

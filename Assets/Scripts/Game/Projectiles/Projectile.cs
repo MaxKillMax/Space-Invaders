@@ -36,12 +36,12 @@ namespace SpaceInvaders.Projectiles
 
         private void Start()
         {
-            UInput.OnUpdate += Move;
+            UnityInput.OnUpdate += Move;
         }
 
         private void OnDestroy()
         {
-            UInput.OnUpdate -= Move;
+            UnityInput.OnUpdate -= Move;
         }
 
         public void Initialize(Sprite sprite, HealthAction healthAction, Vector2 speedMultiply, float lifeTime)

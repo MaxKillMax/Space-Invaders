@@ -28,7 +28,7 @@ namespace SpaceInvaders.Waves
             WaveEnemiesConfigurator configurator = new(data.Path, data.LiveObjects, onConfigured: MoveToNextPoint, onTargetReaching: MoveToNextPoint, onDestroyed: Remove);
             _liveObjectPacks = configurator.Configure();
 
-            UInput.OnUpdate += WaitForShoot;
+            UnityInput.OnUpdate += WaitForShoot;
         }
 
         private void WaitForShoot()
@@ -79,7 +79,7 @@ namespace SpaceInvaders.Waves
 
             _liveObjectPacks.Clear();
 
-            UInput.OnUpdate -= WaitForShoot;
+            UnityInput.OnUpdate -= WaitForShoot;
             OnDestroyed?.Invoke();
         }
     }

@@ -7,9 +7,9 @@ namespace SpaceInvaders.UInputs
     /// <summary>
     /// UnityInput. Contain events on different inputs (as facade)
     /// </summary>
-    public class UInput
+    public class UnityInput
     {
-        private static UInput Instance;
+        private static UnityInput Instance;
 
         /// <summary>
         /// Alternative for Unity Update method
@@ -21,7 +21,7 @@ namespace SpaceInvaders.UInputs
         public static float Horizontal { get; private set; }
         public static float Vertical { get; private set; }
 
-        public UInput()
+        public UnityInput()
         {
             Assert.IsNull(Instance);
 

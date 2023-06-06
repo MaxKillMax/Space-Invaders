@@ -17,7 +17,7 @@ namespace SpaceInvaders
         [SerializeField] private Controllers.Players.Player _player;
 
         private Score _score;
-        private UInput _input;
+        private UnityInput _input;
 
         private void Start()
         {
@@ -70,7 +70,7 @@ namespace SpaceInvaders
             _waveHandler.OnWaveDestroyed += Start;
             _waveHandler.OnWavePathEndReached += Restart;
 
-            UInput.OnEscDown += Application.Quit;
+            UnityInput.OnEscDown += Application.Quit;
         }
 
         private void Unsubscribe()
@@ -84,7 +84,7 @@ namespace SpaceInvaders
             _waveHandler.OnWaveDestroyed -= _waveHandler.LaunchNewWave;
             _waveHandler.OnWavePathEndReached -= Restart;
 
-            UInput.OnEscDown -= Application.Quit;
+            UnityInput.OnEscDown -= Application.Quit;
         }
     }
 }

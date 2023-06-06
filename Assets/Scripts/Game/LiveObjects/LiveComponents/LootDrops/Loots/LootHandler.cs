@@ -27,7 +27,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
             _force = data.Force;
             _loot = data.Loot;
 
-            UInput.OnUpdate += Move;
+            UnityInput.OnUpdate += Move;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -51,7 +51,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
 
         private void OnDestroy()
         {
-            UInput.OnUpdate -= Move;
+            UnityInput.OnUpdate -= Move;
         }
     }
 }

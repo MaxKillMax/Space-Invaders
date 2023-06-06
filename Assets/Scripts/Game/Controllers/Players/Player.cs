@@ -5,7 +5,6 @@ using SpaceInvaders.LiveObjects.LiveComponents.Healths;
 using SpaceInvaders.LiveObjects.LiveComponents.Movements;
 using SpaceInvaders.UInputs;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace SpaceInvaders.Controllers.Players
 {
@@ -18,40 +17,18 @@ namespace SpaceInvaders.Controllers.Players
         [SerializeField] private Transform _parent;
         [SerializeField] private Vector3 _position;
 
-        private LiveObject _liveObject;
-
-        private Attack _attack;
-        private Movement _movement;
-        private Health _health;
-
-        public float Health => _health.Amount;
-        public float MaxHealth => _health.MaxAmount;
-
-        private void Awake()
-        {
-            UInput.OnUpdate += Move;
-            UInput.OnLmbDown += () => _attack?.Launch();
-        }
+        public LiveObject LiveObject { get; private set; }
 
         public void Initialize()
         {
-            if (_liveObject != null)
+            if (LiveObject != null)
                 return;
 
-            CreateLiveObject();
-
-            Assert.IsTrue(_attack != default && _movement != default && _health != default);
+            LiveObject = _liveObjectData.Create(_parent, _position);
 
             Subscribe();
-        }
 
-        private void CreateLiveObject()
-        {
-            _liveObject = _liveObjectData.Create(_parent, _position);
-
-            _attack = _liveObject.GetLiveComponent<Attack>();
-            _movement = _liveObject.GetLiveComponent<Movement>();
-            _health = _liveObject.GetLiveComponent<Health>();
+            OnHealthChanged?.Invoke();
         }
 
         private void OnDestroy()
@@ -61,31 +38,44 @@ namespace SpaceInvaders.Controllers.Players
 
         private void Subscribe()
         {
-            _health.OnDestroyed += () => OnDestroyed?.Invoke();
-            _health.OnChanged += () => OnHealthChanged?.Invoke();
+            UnityInput.OnUpdate += Move;
+            UnityInput.OnLmbDown += Attack;
 
-            OnHealthChanged?.Invoke();
+            if (LiveObject.TryGetLiveComponent(out Health health))
+            {
+                health.OnDestroyed += () => OnDestroyed?.Invoke();
+                health.OnChanged += () => OnHealthChanged?.Invoke();
+            }
         }
 
         private void Unsubscribe()
         {
-            UInput.OnUpdate -= Move;
-            UInput.OnLmbDown -= () => _attack?.Launch();
+            UnityInput.OnUpdate -= Move;
+            UnityInput.OnLmbDown -= Attack;
 
-            if (_health != null)
+            if (LiveObject.TryGetLiveComponent(out Health health))
             {
-                _health.OnDestroyed -= () => OnDestroyed?.Invoke();
-                _health.OnChanged -= () => OnHealthChanged?.Invoke();
+                health.OnDestroyed += () => OnDestroyed?.Invoke();
+                health.OnChanged += () => OnHealthChanged?.Invoke();
             }
+        }
+
+        private void Attack()
+        {
+            if (LiveObject.TryGetLiveComponent(out Attack attack))
+                attack.Launch();
         }
 
         private void Move()
         {
-            float horizontal = UInput.Horizontal;
-            float vertical = UInput.Vertical;
+            float horizontal = UnityInput.Horizontal;
+            float vertical = UnityInput.Vertical;
 
-            if (horizontal != 0 || vertical != 0)
-                _movement?.Move(new(horizontal, vertical));
+            if (horizontal == 0 && vertical == 0)
+                return;
+
+            if (LiveObject.TryGetLiveComponent(out Movement movement))
+                movement.Move(new(horizontal, vertical));
         }
     }
 }
