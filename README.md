@@ -1,5 +1,6 @@
 # SPACE INVADERS
 
+Ссылка на видео геймплея: https://drive.google.com/file/d/1cmptMPRu6JR-7vJ4Hm5MH-TxpCVWJHY3/view
 Небольшой ввод в проект
 
 ## Организация файлов
