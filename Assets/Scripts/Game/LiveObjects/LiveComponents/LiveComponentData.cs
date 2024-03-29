@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents
+namespace SI.LiveObjects.LiveComponents
 {
     public abstract class LiveComponentData : ScriptableObject
     {

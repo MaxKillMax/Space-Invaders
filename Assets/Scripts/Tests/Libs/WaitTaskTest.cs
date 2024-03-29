@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using SpaceInvaders;
+using SI;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.TestTools;

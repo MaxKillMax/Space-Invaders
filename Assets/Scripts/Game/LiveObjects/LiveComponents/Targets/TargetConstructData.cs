@@ -1,4 +1,4 @@
-﻿namespace SpaceInvaders.LiveObjects.LiveComponents.Targets
+﻿namespace SI.LiveObjects.LiveComponents.Targets
 {
     public struct TargetConstructData
     {

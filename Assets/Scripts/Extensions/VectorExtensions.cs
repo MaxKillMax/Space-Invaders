@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace SpaceInvaders
+namespace SI
 {
     public static class VectorExtensions
     {

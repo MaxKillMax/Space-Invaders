@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using SpaceInvaders.UInputs;
 using UnityEngine;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     /// <summary>
     /// Control all enemies in wave
@@ -11,7 +10,7 @@ namespace SpaceInvaders.Waves
     public class Wave
     {
         public event Action OnPathEndReached;
-        public event Action OnEnemyDestroyed;
+        public event Action<WaveLiveObjectData> OnEnemyDestroyed;
         public event Action OnDestroyed;
 
         private readonly Vector2[] _path;
@@ -28,7 +27,7 @@ namespace SpaceInvaders.Waves
             WaveEnemiesConfigurator configurator = new(data.Path, data.LiveObjects, onConfigured: MoveToNextPoint, onTargetReaching: MoveToNextPoint, onDestroyed: Remove);
             _liveObjectPacks = configurator.Configure();
 
-            UnityInput.OnUpdate += WaitForShoot;
+            Times.Time.OnUpdate += WaitForShoot;
         }
 
         private void WaitForShoot()
@@ -64,9 +63,12 @@ namespace SpaceInvaders.Waves
 
         private void Remove(WaveLiveObjectData pack)
         {
+            Times.Time.OnStop -= pack.Movement.Stop;
+            Times.Time.OnResume -= pack.Movement.Resume;
+
             _liveObjectPacks.Remove(pack);
 
-            OnEnemyDestroyed?.Invoke();
+            OnEnemyDestroyed?.Invoke(pack);
 
             if (_liveObjectPacks.Count == 0)
                 Destroy();
@@ -75,11 +77,16 @@ namespace SpaceInvaders.Waves
         public void Destroy()
         {
             for (int i = 0; i < _liveObjectPacks.Count; i++)
+            {
+                Times.Time.OnStop -= _liveObjectPacks[i].Movement.Stop;
+                Times.Time.OnResume -= _liveObjectPacks[i].Movement.Resume;
+
                 UnityEngine.Object.Destroy(_liveObjectPacks[i].LiveObject.gameObject);
+            }
 
             _liveObjectPacks.Clear();
 
-            UnityInput.OnUpdate -= WaitForShoot;
+            Times.Time.OnUpdate -= WaitForShoot;
             OnDestroyed?.Invoke();
         }
     }

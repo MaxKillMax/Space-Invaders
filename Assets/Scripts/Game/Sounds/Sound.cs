@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace SpaceInvaders.Sounds
+namespace SI.Sounds
 {
     /// <summary>
     /// Very simple sound manager

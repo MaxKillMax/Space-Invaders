@@ -1,10 +1,9 @@
 ﻿using System;
-using SpaceInvaders.LiveObjects;
-using SpaceInvaders.LiveObjects.LiveComponents.Healths;
-using SpaceInvaders.UInputs;
+using SI.LiveObjects;
+using SI.LiveObjects.LiveComponents.Healths;
 using UnityEngine;
 
-namespace SpaceInvaders.Projectiles
+namespace SI.Projectiles
 {
     /// <summary>
     /// A projectile flying in the direction and reacting to enemy LiveObjects
@@ -36,12 +35,12 @@ namespace SpaceInvaders.Projectiles
 
         private void Start()
         {
-            UnityInput.OnUpdate += Move;
+            Times.Time.OnUpdate += Move;
         }
 
         private void OnDestroy()
         {
-            UnityInput.OnUpdate -= Move;
+            Times.Time.OnUpdate -= Move;
         }
 
         public void Initialize(Sprite sprite, HealthAction healthAction, Vector2 speedMultiply, float lifeTime)

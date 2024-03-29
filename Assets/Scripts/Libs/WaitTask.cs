@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace SpaceInvaders
+namespace SI
 {
     /// <summary>
     /// Allow to wait with boolean conditions

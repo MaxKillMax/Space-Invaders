@@ -1,12 +1,12 @@
 ﻿using System;
-using SpaceInvaders.LiveObjects;
-using SpaceInvaders.LiveObjects.LiveComponents.Attacks;
-using SpaceInvaders.LiveObjects.LiveComponents.Healths;
-using SpaceInvaders.LiveObjects.LiveComponents.Movements;
-using SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings;
+using SI.LiveObjects;
+using SI.LiveObjects.LiveComponents.Attacks;
+using SI.LiveObjects.LiveComponents.Healths;
+using SI.LiveObjects.LiveComponents.Movements;
+using SI.LiveObjects.LiveComponents.TargetTrackings;
 using UnityEngine.Assertions;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     /// <summary>
     /// Packed enemy LiveObject for Waves

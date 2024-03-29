@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-namespace SpaceInvaders.Sounds
+namespace SI.Sounds
 {
     /// <summary>
     /// Sound source

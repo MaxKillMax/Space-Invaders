@@ -1,6 +1,6 @@
-using SpaceInvaders.LiveObjects.LiveComponents.Attacks;
+using SI.LiveObjects.LiveComponents.Attacks;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots.AttackLoots
+namespace SI.LiveObjects.LiveComponents.LootDrops.Loots.AttackLoots
 {
     /// <summary>
     /// Replaces old attack data on new

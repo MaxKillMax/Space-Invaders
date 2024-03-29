@@ -1,7 +1,7 @@
-﻿using SpaceInvaders.LiveObjects;
+﻿using SI.LiveObjects;
 using UnityEngine;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     /// <summary>
     /// Data for wave initialization

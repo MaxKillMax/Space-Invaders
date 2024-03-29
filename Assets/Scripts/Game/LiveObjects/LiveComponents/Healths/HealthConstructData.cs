@@ -1,7 +1,7 @@
-﻿using SpaceInvaders.LiveObjects.LiveComponents.Targets;
+﻿using SI.LiveObjects.LiveComponents.Targets;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
+namespace SI.LiveObjects.LiveComponents.Healths
 {
     public struct HealthConstructData
     {

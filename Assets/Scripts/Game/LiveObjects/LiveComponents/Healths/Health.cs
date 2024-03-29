@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using SpaceInvaders.LiveObjects.LiveComponents.Targets;
+using SI.LiveObjects.LiveComponents.Targets;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
+namespace SI.LiveObjects.LiveComponents.Healths
 {
     /// <summary>
     /// Indicates that the LiveObject may die

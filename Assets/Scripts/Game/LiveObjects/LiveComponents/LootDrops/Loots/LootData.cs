@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
+namespace SI.LiveObjects.LiveComponents.LootDrops.Loots
 {
     public abstract class LootData : ScriptableObject
     {

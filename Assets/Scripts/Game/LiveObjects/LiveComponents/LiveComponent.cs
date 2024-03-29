@@ -1,6 +1,6 @@
 using System;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents
+namespace SI.LiveObjects.LiveComponents
 {
     /// <summary>
     /// Represents the specific logic of a LiveObject
@@ -13,5 +13,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents
         /// </summary>
         /// <param name="component"></param>
         public abstract void TryReplace(LiveComponent component);
+
+        public virtual void OnDestroy() { }
     }
 }

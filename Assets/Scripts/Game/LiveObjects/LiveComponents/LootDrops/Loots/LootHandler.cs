@@ -1,8 +1,7 @@
-﻿using SpaceInvaders.LiveObjects.LiveComponents.Targets;
-using SpaceInvaders.UInputs;
+﻿using SI.LiveObjects.LiveComponents.Targets;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
+namespace SI.LiveObjects.LiveComponents.LootDrops.Loots
 {
     /// <summary>
     /// Loot falling down and if interact with target, target take loot
@@ -27,7 +26,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
             _force = data.Force;
             _loot = data.Loot;
 
-            UnityInput.OnUpdate += Move;
+            Times.Time.OnUpdate += Move;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -51,7 +50,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots
 
         private void OnDestroy()
         {
-            UnityInput.OnUpdate -= Move;
+            Times.Time.OnUpdate -= Move;
         }
     }
 }

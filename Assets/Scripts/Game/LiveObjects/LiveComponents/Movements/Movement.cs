@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Movements
+namespace SI.LiveObjects.LiveComponents.Movements
 {
     /// <summary>
     /// Moves the LiveObject in the direction of
@@ -9,6 +9,7 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.Movements
     {
         private Rigidbody2D _rigidbody;
         private Vector2 _speed;
+        private Vector2 _direction;
         private float _bothDirectionsDivider;
 
         public Movement(MovementConstructData data)
@@ -23,12 +24,18 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.Movements
             if (direction.x != 0 && direction.y != 0)
                 direction /= _bothDirectionsDivider;
 
+            _direction = direction;
             _rigidbody.velocity = _speed * direction;
         }
 
         public void Stop()
         {
             _rigidbody.velocity = Vector2.zero;
+        }
+
+        public void Resume()
+        {
+            _rigidbody.velocity = _speed * _direction;
         }
 
         public override void TryReplace(LiveComponent component)

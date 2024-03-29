@@ -1,8 +1,8 @@
-﻿using SpaceInvaders.LiveObjects.LiveComponents.Healths;
-using SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots;
+﻿using SI.LiveObjects.LiveComponents.Healths;
+using SI.LiveObjects.LiveComponents.LootDrops.Loots;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops
+namespace SI.LiveObjects.LiveComponents.LootDrops
 {
     public struct LootDropConstructData
     {

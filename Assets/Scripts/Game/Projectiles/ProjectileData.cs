@@ -1,7 +1,7 @@
-﻿using SpaceInvaders.LiveObjects.LiveComponents.Healths;
+﻿using SI.LiveObjects.LiveComponents.Healths;
 using UnityEngine;
 
-namespace SpaceInvaders.Projectiles
+namespace SI.Projectiles
 {
     [CreateAssetMenu(fileName = nameof(ProjectileData), menuName = nameof(ProjectileData), order = 51)]
     public class ProjectileData : ScriptableObject

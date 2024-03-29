@@ -1,8 +1,8 @@
 ﻿using System;
-using SpaceInvaders.LiveObjects;
+using SI.LiveObjects;
 using UnityEngine;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     [CreateAssetMenu(fileName = nameof(WaveData), menuName = nameof(WaveData), order = 51)]
     public class WaveData : ScriptableObject

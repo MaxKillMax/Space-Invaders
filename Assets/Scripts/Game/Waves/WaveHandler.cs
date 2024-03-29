@@ -1,64 +1,82 @@
 using System;
 using UnityEngine;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     /// <summary>
     /// Keeps track of the current wave and tracks its events
     /// </summary>
     public class WaveHandler : MonoBehaviour
     {
-        public event Action OnWaveCountChanged;
-        public event Action OnWavePathEndReached;
-        public event Action OnWaveEnemyDestroyed;
-        public event Action OnWaveDestroyed;
-
         [SerializeField] private Transform _parent;
         [SerializeField] private WaveData[] _waveDatas;
 
-        private Wave Wave { get; set; }
+        private Wave _wave;
         public int CountOfWaves { get; private set; } = -1;
+        public DateTime StartTime { get; private set; }
+        public float TotalTime => (float)(DateTime.Now - StartTime).TotalSeconds;
 
-        public void LaunchNewWave()
+        public event Action OnWaveCountChanged;
+        public event Action OnPathEndReached;
+        public event Action OnEnemyDestroyed;
+        public event Action OnWaveDestroyed;
+
+        public void RestartWave()
+        {
+            CountOfWaves--;
+            StartNewWave();
+        }
+
+        public void StartNewWave()
         {
             TryDestroyWave();
 
+            StartTime = DateTime.Now;
+
             CountOfWaves++;
             int index = CountOfWaves % _waveDatas.Length;
-            Wave = _waveDatas[index].Create(_parent);
+            _wave = _waveDatas[index].Create(_parent);
 
             Subscribe();
 
             OnWaveCountChanged?.Invoke();
         }
 
-        private void Subscribe()
-        {
-            Wave.OnDestroyed += () => OnWaveDestroyed?.Invoke();
-            Wave.OnEnemyDestroyed += () => OnWaveEnemyDestroyed?.Invoke();
-            Wave.OnPathEndReached += () => OnWavePathEndReached?.Invoke();
-        }
-
-        public void ResetCounter() => CountOfWaves = -1;
-
         private void OnDestroy() => TryDestroyWave();
 
         private void TryDestroyWave()
         {
-            if (Wave == null)
+            if (_wave == null)
                 return;
 
-            Unsubscrie();
+            Unsubscribe();
 
-            Wave.Destroy();
-            Wave = null;
+            _wave.Destroy();
+            _wave = null;
         }
 
-        private void Unsubscrie()
+        private void Subscribe()
         {
-            Wave.OnDestroyed -= () => OnWaveDestroyed?.Invoke();
-            Wave.OnEnemyDestroyed -= () => OnWaveEnemyDestroyed?.Invoke();
-            Wave.OnPathEndReached -= () => OnWavePathEndReached?.Invoke();
+            _wave.OnDestroyed += OnDestroyed;
+            _wave.OnEnemyDestroyed += OnEnemyDestroy;
+            _wave.OnPathEndReached += OnPathEndReach;
         }
+
+        private void Unsubscribe()
+        {
+            _wave.OnDestroyed -= OnDestroyed;
+            _wave.OnEnemyDestroyed -= OnEnemyDestroy;
+            _wave.OnPathEndReached -= OnPathEndReach;
+        }
+
+        private void OnDestroyed() => OnWaveDestroyed?.Invoke();
+
+        private void OnEnemyDestroy(WaveLiveObjectData pack)
+        {
+            Debug.Log(pack.LiveObject.name);
+            OnEnemyDestroyed?.Invoke();
+        }
+
+        private void OnPathEndReach() => OnPathEndReached?.Invoke();
     }
 }

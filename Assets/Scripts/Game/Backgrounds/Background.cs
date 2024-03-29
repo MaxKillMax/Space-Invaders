@@ -1,7 +1,6 @@
-using SpaceInvaders.UInputs;
 using UnityEngine;
 
-namespace SpaceInvaders.Backgrounds
+namespace SI.Backgrounds
 {
     public class Background : MonoBehaviour
     {
@@ -14,12 +13,12 @@ namespace SpaceInvaders.Backgrounds
         {
             _transform = transform;
 
-            UnityInput.OnUpdate += MoveSprite;
+            Times.Time.OnUpdate += MoveSprite;
         }
 
         private void OnDestroy()
         {
-            UnityInput.OnUpdate -= MoveSprite;
+            Times.Time.OnUpdate -= MoveSprite;
         }
 
         private void MoveSprite()

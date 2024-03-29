@@ -1,31 +1,53 @@
 using System;
-using SpaceInvaders.LiveObjects;
-using SpaceInvaders.LiveObjects.LiveComponents.Attacks;
-using SpaceInvaders.LiveObjects.LiveComponents.Healths;
-using SpaceInvaders.LiveObjects.LiveComponents.Movements;
-using SpaceInvaders.UInputs;
+using SI.LiveObjects;
+using SI.LiveObjects.LiveComponents.Attacks;
+using SI.LiveObjects.LiveComponents.Healths;
+using SI.LiveObjects.LiveComponents.Movements;
 using UnityEngine;
 
-namespace SpaceInvaders.Controllers.Players
+namespace SI.Controllers.Players
 {
     public class Player : MonoBehaviour
     {
-        public event Action OnDestroyed;
-        public event Action OnHealthChanged;
+        public const string POINTS_KEY = "PLAYER_POINTS";
 
         [SerializeField] private LiveObjectData _liveObjectData;
         [SerializeField] private Transform _parent;
         [SerializeField] private Vector3 _position;
 
+        public int Points { get; private set; }
         public LiveObject LiveObject { get; private set; }
 
-        public void Initialize()
+        public event Action OnDestroyed;
+        public event Action OnHealthChanged;
+
+        private void Awake()
+        {
+            Points = PlayerPrefs.GetInt(POINTS_KEY);
+        }
+
+        public void RecreateView()
+        {
+            if (LiveObject != null)
+            {
+                Unsubscribe();
+                Destroy(LiveObject.gameObject);
+            }
+
+            CreateView();
+        }
+
+        public void TryCreateView()
         {
             if (LiveObject != null)
                 return;
 
-            LiveObject = _liveObjectData.Create(_parent, _position);
+            CreateView();
+        }
 
+        private void CreateView()
+        {
+            LiveObject = _liveObjectData.Create(_parent, _position);
             Subscribe();
 
             OnHealthChanged?.Invoke();
@@ -33,13 +55,15 @@ namespace SpaceInvaders.Controllers.Players
 
         private void OnDestroy()
         {
+            PlayerPrefs.SetInt(POINTS_KEY, Points);
+
             Unsubscribe();
         }
 
         private void Subscribe()
         {
-            UnityInput.OnUpdate += Move;
-            UnityInput.OnLmbDown += Attack;
+            Times.Time.OnUpdate += Move;
+            Inputs.Input.OnPointerDown += Attack;
 
             if (LiveObject.TryGetLiveComponent(out Health health))
             {
@@ -50,8 +74,8 @@ namespace SpaceInvaders.Controllers.Players
 
         private void Unsubscribe()
         {
-            UnityInput.OnUpdate -= Move;
-            UnityInput.OnLmbDown -= Attack;
+            Times.Time.OnUpdate -= Move;
+            Inputs.Input.OnPointerDown -= Attack;
 
             if (LiveObject.TryGetLiveComponent(out Health health))
             {
@@ -68,8 +92,8 @@ namespace SpaceInvaders.Controllers.Players
 
         private void Move()
         {
-            float horizontal = UnityInput.Horizontal;
-            float vertical = UnityInput.Vertical;
+            float horizontal = Inputs.Input.Horizontal;
+            float vertical = Inputs.Input.Vertical;
 
             if (horizontal == 0 && vertical == 0)
                 return;

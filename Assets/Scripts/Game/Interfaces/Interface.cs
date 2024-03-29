@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpaceInvaders.Interfaces
+namespace SI.Interfaces
 {
     /// <summary>
     /// Base class for all comlex ui objects (for example: ShopInterface, GameInterface, SettingsInterface)
@@ -24,6 +24,9 @@ namespace SpaceInvaders.Interfaces
 
         public void SetState(bool state)
         {
+            if (State == state)
+                return;
+
             State = state;
             gameObject.SetActive(state);
 
@@ -45,5 +48,7 @@ namespace SpaceInvaders.Interfaces
         private static readonly List<Interface> Objects = new();
 
         public static void Initialize() => Objects.ForEach((i) => i.OnInitialize());
+
+        public static void Single<T>() => Objects.ForEach((i) => i.SetState(i.GetType() == typeof(T)));
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings
+namespace SI.LiveObjects.LiveComponents.TargetTrackings
 {
     [CreateAssetMenu(fileName = nameof(TargetTrackingData), menuName = PathStart + nameof(TargetTrackingData), order = Order)]
     public class TargetTrackingData : LiveComponentData

@@ -1,7 +1,7 @@
-using SpaceInvaders.LiveObjects.LiveComponents.Attacks;
+using SI.LiveObjects.LiveComponents.Attacks;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.LootDrops.Loots.AttackLoots
+namespace SI.LiveObjects.LiveComponents.LootDrops.Loots.AttackLoots
 {
     [CreateAssetMenu(fileName = nameof(AttackLootData), menuName = PathStart + nameof(AttackLootData), order = Order)]
     public class AttackLootData : LootData

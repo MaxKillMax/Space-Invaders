@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Targets
+namespace SI.LiveObjects.LiveComponents.Targets
 {
     [CreateAssetMenu(fileName = nameof(TargetData), menuName = PathStart + nameof(TargetData), order = Order)]
     public class TargetData : LiveComponentData

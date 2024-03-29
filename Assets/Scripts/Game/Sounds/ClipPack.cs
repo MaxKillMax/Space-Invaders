@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.Sounds
+namespace SI.Sounds
 {
     /// <summary>
     /// Pack for Sound, which can contain different settings (mixer group, volume, loop, delay..)

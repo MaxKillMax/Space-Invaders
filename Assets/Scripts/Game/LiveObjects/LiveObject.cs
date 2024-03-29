@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using SpaceInvaders.LiveObjects.LiveComponents;
+using SI.LiveObjects.LiveComponents;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects
+namespace SI.LiveObjects
 {
     /// <summary>
     /// LiveObject is a container of LiveComponents
@@ -22,6 +22,12 @@ namespace SpaceInvaders.LiveObjects
             Rigidbody = GetComponent<Rigidbody2D>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
             Collider = GetComponent<Collider2D>();
+        }
+
+        private void OnDestroy()
+        {
+            for (int i = 0; i < _liveComponents.Count; i++)
+                _liveComponents[i].OnDestroy();
         }
 
         public void TryAddLiveComponent(LiveComponent liveComponent)

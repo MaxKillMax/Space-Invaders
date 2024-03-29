@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Movements
+namespace SI.LiveObjects.LiveComponents.Movements
 {
     public struct MovementConstructData
     {

@@ -1,8 +1,8 @@
-﻿using SpaceInvaders.Projectiles;
-using SpaceInvaders.Sounds;
+﻿using SI.Projectiles;
+using SI.Sounds;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Attacks
+namespace SI.LiveObjects.LiveComponents.Attacks
 {
     [CreateAssetMenu(fileName = nameof(AttackData), menuName = PathStart + nameof(AttackData), order = Order)]
     public class AttackData : LiveComponentData

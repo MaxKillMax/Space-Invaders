@@ -1,20 +1,19 @@
 ﻿using System;
-using SpaceInvaders.UInputs;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings
+namespace SI.LiveObjects.LiveComponents.TargetTrackings
 {
     /// <summary>
     /// Tracks path to target (point)
     /// </summary>
     public class TargetTracking : LiveComponent
     {
-        public event Action OnTargetReaching;
-
         private Transform _transform;
         private float _errorSize;
 
         private Vector2 _destination;
+
+        public event Action OnTargetReaching;
 
         public TargetTracking(TargetTrackingConstructData data)
         {
@@ -22,16 +21,21 @@ namespace SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings
             _errorSize = data.ErrorSize;
         }
 
+        public override void OnDestroy()
+        {
+            StopTrack();
+        }
+
         public void Track(Vector2 destination)
         {
-            UnityInput.OnUpdate += CheckDistance;
+            Times.Time.OnUpdate += CheckDistance;
 
             _destination = destination;
         }
 
         public void StopTrack()
         {
-            UnityInput.OnUpdate -= CheckDistance;
+            Times.Time.OnUpdate -= CheckDistance;
         }
 
         private void CheckDistance()

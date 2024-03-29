@@ -1,6 +1,5 @@
 using System.Collections;
-using SpaceInvaders.Backgrounds;
-using SpaceInvaders.UInputs;
+using SI.Backgrounds;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.TestTools;
@@ -13,7 +12,7 @@ namespace SpaceInvadersTest.Backgrounds
         public IEnumerator Background_Rotate5Seconds_RotatesOn5Degrees()
         {
             // Arrange
-            UnityInput input = new();
+            SI.Inputs.Input input = new();
             Background background = new GameObject().AddComponent<Background>();
 
             float time = 5;

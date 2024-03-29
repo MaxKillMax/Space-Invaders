@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.TargetTrackings
+namespace SI.LiveObjects.LiveComponents.TargetTrackings
 {
     public struct TargetTrackingConstructData
     {

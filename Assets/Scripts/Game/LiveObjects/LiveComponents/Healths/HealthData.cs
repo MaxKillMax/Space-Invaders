@@ -1,7 +1,7 @@
-﻿using SpaceInvaders.LiveObjects.LiveComponents.Targets;
+﻿using SI.LiveObjects.LiveComponents.Targets;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
+namespace SI.LiveObjects.LiveComponents.Healths
 {
     [CreateAssetMenu(fileName = nameof(HealthData), menuName = PathStart + nameof(HealthData), order = Order)]
     public class HealthData : LiveComponentData

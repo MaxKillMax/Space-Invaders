@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SpaceInvaders.LiveObjects.LiveComponents;
+using SI.LiveObjects.LiveComponents;
 using UnityEngine;
 
-namespace SpaceInvaders.LiveObjects
+namespace SI.LiveObjects
 {
     [CreateAssetMenu(fileName = nameof(LiveObjectData), menuName = nameof(LiveObjectData), order = 51)]
     public class LiveObjectData : ScriptableObject

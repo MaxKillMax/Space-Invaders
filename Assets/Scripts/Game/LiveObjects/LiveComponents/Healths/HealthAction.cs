@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpaceInvaders.LiveObjects.LiveComponents.Healths
+namespace SI.LiveObjects.LiveComponents.Healths
 {
     /// <summary>
     /// The data you need to interact with health

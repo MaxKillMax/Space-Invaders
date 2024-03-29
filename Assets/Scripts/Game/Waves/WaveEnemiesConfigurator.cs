@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaceInvaders.LiveObjects;
+using SI.LiveObjects;
 using UnityEngine;
 
-namespace SpaceInvaders.Waves
+namespace SI.Waves
 {
     /// <summary>
     /// Configures parameters for LiveObjects. Generates the result as packed dates
@@ -39,11 +39,20 @@ namespace SpaceInvaders.Waves
                 pack.TargetTracking.OnTargetReaching += () => _onTargetReaching?.Invoke(pack);
                 pack.Health.OnDestroyed += () => _onDestroyed?.Invoke(pack);
 
+                Times.Time.OnStop += pack.Movement.Stop;
+                Times.Time.OnResume += pack.Movement.Resume;
+
                 _onConfigured?.Invoke(pack);
                 waveLives.Add(pack);
             }
 
             return waveLives;
+        }
+
+        public void Disassemble(WaveLiveObjectData pack)
+        {
+            Times.Time.OnStop -= pack.Movement.Stop;
+            Times.Time.OnResume -= pack.Movement.Resume;
         }
     }
 }
