@@ -71,11 +71,7 @@ namespace SI.Waves
 
         private void OnDestroyed() => OnWaveDestroyed?.Invoke();
 
-        private void OnEnemyDestroy(WaveLiveObjectData pack)
-        {
-            Debug.Log(pack.LiveObject.name);
-            OnEnemyDestroyed?.Invoke();
-        }
+        private void OnEnemyDestroy(WaveLiveObjectData pack) => OnEnemyDestroyed?.Invoke();
 
         private void OnPathEndReach() => OnPathEndReached?.Invoke();
     }

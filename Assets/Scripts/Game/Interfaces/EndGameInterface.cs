@@ -20,8 +20,6 @@ namespace SI.Interfaces.EndGameInterfaces
 
         protected override void OnInitialize()
         {
-            SetState(false);
-
             _nextLevelButton.onClick.AddListener(() => OnNextLevelButtonClicked?.Invoke());
             _restartLevelButton.onClick.AddListener(() => OnRestartLevelButtonClicked?.Invoke());
             _multiplyScoreButton.onClick.AddListener(() =>
@@ -42,6 +40,12 @@ namespace SI.Interfaces.EndGameInterfaces
         protected override void OnOpen()
         {
             _multiplyScoreButton.interactable = true;
+            Game.SetPauseState(true);
+        }
+
+        protected override void OnClose()
+        {
+            Game.SetPauseState(false);
         }
     }
 }

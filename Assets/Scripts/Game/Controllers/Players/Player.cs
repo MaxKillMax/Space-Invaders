@@ -23,7 +23,7 @@ namespace SI.Controllers.Players
 
         private void Awake()
         {
-            Points = PlayerPrefs.GetInt(POINTS_KEY);
+            Points = Saving.Load(POINTS_KEY, out int points) ? points : 0;
         }
 
         public void RecreateView()
@@ -55,7 +55,7 @@ namespace SI.Controllers.Players
 
         private void OnDestroy()
         {
-            PlayerPrefs.SetInt(POINTS_KEY, Points);
+            Saving.Save(POINTS_KEY, Points);
 
             Unsubscribe();
         }

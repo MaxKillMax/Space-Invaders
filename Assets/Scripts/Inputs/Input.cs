@@ -12,8 +12,8 @@ namespace SI.Inputs
         public static event Action OnPointerDown;
         public static event Action OnPointerUp;
 
-        public static float Horizontal => UnityEngine.Input.GetAxis("Horizontal");
-        public static float Vertical => UnityEngine.Input.GetAxis("Vertical");
+        public static float Horizontal { get; private set; }
+        public static float Vertical { get; private set; }
 
         public static bool IsPointerHolding { get; private set; }
 
@@ -29,6 +29,9 @@ namespace SI.Inputs
 
         public void Update()
         {
+            Horizontal = UnityEngine.Input.GetAxis("Horizontal");
+            Vertical = UnityEngine.Input.GetAxis("Vertical");
+
             if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
                 OnEscapeClicked?.Invoke();
 
@@ -52,6 +55,13 @@ namespace SI.Inputs
                     Debug.LogWarning(exception);
                 }
             }
+        }
+
+        public void Stop()
+        {
+            Horizontal = 0;
+            Vertical = 0;
+            IsPointerHolding = false;
         }
     }
 }

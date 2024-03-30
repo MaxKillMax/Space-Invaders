@@ -10,7 +10,7 @@ namespace SI.Interfaces
     {
         public bool State { get; private set; }
 
-        private void Awake()
+        public void Initialize()
         {
             Objects.Add(this);
 
@@ -47,7 +47,7 @@ namespace SI.Interfaces
     {
         private static readonly List<Interface> Objects = new();
 
-        public static void Initialize() => Objects.ForEach((i) => i.OnInitialize());
+        public static void StaticInitialize() => Objects.ForEach((i) => i.OnInitialize());
 
         public static void Single<T>() => Objects.ForEach((i) => i.SetState(i.GetType() == typeof(T)));
     }

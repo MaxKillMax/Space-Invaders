@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Audio;
 
 namespace SI.Sounds
 {
@@ -10,6 +11,7 @@ namespace SI.Sounds
     {
         private static Sound Instance;
 
+        [SerializeField] private AudioMixer _mixer;
         [SerializeField] private Transform _parent;
         [SerializeField] private Player _prefab;
 
@@ -18,6 +20,11 @@ namespace SI.Sounds
             Assert.IsNull(Instance);
 
             Instance = this;
+        }
+
+        public static void SetGroupVolume(string key, float volume)
+        {
+            Instance._mixer.SetFloat(key, volume);
         }
 
         public static void PlayOnPoint(Vector3 point, ClipPack pack)

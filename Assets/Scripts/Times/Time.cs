@@ -26,6 +26,9 @@ namespace SI.Times
 
         public void Stop()
         {
+            if (IsStopped)
+                return;
+
             IsStopped = true;
 
             Delta = 0;

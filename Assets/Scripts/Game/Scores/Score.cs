@@ -9,16 +9,19 @@ namespace SI.Scores
     public class Score
     {
         public const float TIME_SCORE_REDUCTION_MULTIPLIER = 0.2f;
+        public const float HEALTH_SCORE_REDUCTION_MULTIPLIER = 2f;
+        public const float START_WAVE_SCORE = 15;
 
-        private int _current = 0;
+        private int _current = START_WAVE_SCORE;
 
         public event Action OnUpdated;
 
         public int GetNativeScore() => _current;
 
-        public int GetTimeScore(float time)
+        public int GetFullScore(float time, float removedHealthsCount)
         {
             float score = _current - (time * TIME_SCORE_REDUCTION_MULTIPLIER);
+            score -= HEALTH_SCORE_REDUCTION_MULTIPLIER * removedHealthsCount;
 
             if (score < 0)
                 score = 0;
@@ -28,7 +31,6 @@ namespace SI.Scores
 
         public void Add(int value)
         {
-            Debug.Log("Add");
             _current += value;
 
             if (_current < 0)
@@ -39,7 +41,7 @@ namespace SI.Scores
 
         public void Clear()
         {
-            _current = 0;
+            _current = START_WAVE_SCORE;
             OnUpdated?.Invoke();
         }
     }

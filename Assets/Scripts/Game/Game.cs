@@ -1,6 +1,10 @@
+using CrazyGames;
 using SI.Interfaces;
 using SI.Interfaces.EndGameInterfaces;
+using SI.Interfaces.EnemiesPassedInterfaces;
 using SI.Interfaces.GameInterfaces;
+using SI.Interfaces.HealthOverInterfaces;
+using SI.Interfaces.PauseInterfaces;
 using SI.LiveObjects.LiveComponents.Healths;
 using SI.Scores;
 using SI.Sounds;
@@ -11,10 +15,16 @@ namespace SI
 {
     public class Game : MonoBehaviour
     {
+        private static Game Instance;
+
         [SerializeField] private Sound _sound;
+        [SerializeField] private Ad _ad;
         [SerializeField] private Backgrounds.Background _background;
         [SerializeField] private GameInterface _gameInterface;
         [SerializeField] private EndGameInterface _endGameInterface;
+        [SerializeField] private HealthOverInterface _healthOverInterface;
+        [SerializeField] private EnemiesPassedInterface _enemiesPassedInterface;
+        [SerializeField] private PauseInterface _pauseInterface;
         [SerializeField] private WaveHandler _waveHandler;
         [SerializeField] private Controllers.Players.Player _player;
 
@@ -22,15 +32,18 @@ namespace SI
         private readonly Inputs.Input _input = new();
         private readonly Times.Time _time = new();
 
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void Start()
         {
             _sound.Initialize();
             _background.Initialize();
-            Interface.Initialize();
-            _player.TryCreateView();
 
             Subscribe();
-            _waveHandler.StartNewWave();
+            Next();
         }
 
         private void OnDestroy()
@@ -70,37 +83,81 @@ namespace SI
             _waveHandler.RestartWave();
         }
 
+        public static void SetPauseState(bool state)
+        {
+            if (state)
+            {
+                Instance._time.Stop();
+                Instance._input.Stop();
+            }
+
+            Instance.enabled = !state;
+        }
+
         private void Subscribe()
         {
             _player.OnHealthChanged += OnPlayerHealthChanged;
-            _player.OnDestroyed += Restart;
+            _player.OnDestroyed += OnPlayerDestroyed;
 
             _waveHandler.OnEnemyDestroyed += OnEnemyDestroyed;
             _waveHandler.OnWaveDestroyed += OnLevelPassed;
-            _waveHandler.OnPathEndReached += Restart;
+            _waveHandler.OnPathEndReached += OnPathEnded;
+
+            _gameInterface.OnPauseButtonClicked += OnPauseButtonClicked;
 
             _endGameInterface.OnNextLevelButtonClicked += OnNextLevelButtonClicked;
             _endGameInterface.OnRestartLevelButtonClicked += OnRestartButtonClicked;
             _endGameInterface.OnMultiplyScoreButtonClicked += MultiplyScore;
+
+            _healthOverInterface.OnRestartButtonClicked += OnRestartButtonClicked;
+            _healthOverInterface.OnRestoreButtonClicked += OnRestoreButtonClicked;
+
+            _enemiesPassedInterface.OnRestartButtonClicked += OnRestartButtonClicked;
+
+            _pauseInterface.OnRestartButtonClicked += OnRestartButtonClicked;
+            _pauseInterface.OnContinueButtonClicked += OnResumeButtonClicked;
+            _pauseInterface.OnStoreButtonClicked += OnStoreButtonClicked;
         }
 
         private void Unsubscribe()
         {
             _player.OnHealthChanged -= OnPlayerHealthChanged;
-            _player.OnDestroyed -= Restart;
+            _player.OnDestroyed -= OnPlayerDestroyed;
 
             _waveHandler.OnEnemyDestroyed -= OnEnemyDestroyed;
             _waveHandler.OnWaveDestroyed -= OnLevelPassed;
-            _waveHandler.OnPathEndReached -= Restart;
+            _waveHandler.OnPathEndReached -= OnPathEnded;
+
+            _gameInterface.OnPauseButtonClicked -= OnPauseButtonClicked;
 
             _endGameInterface.OnNextLevelButtonClicked -= OnNextLevelButtonClicked;
             _endGameInterface.OnRestartLevelButtonClicked -= OnRestartButtonClicked;
             _endGameInterface.OnMultiplyScoreButtonClicked -= MultiplyScore;
+
+            _healthOverInterface.OnRestartButtonClicked -= OnRestartButtonClicked;
+            _healthOverInterface.OnRestoreButtonClicked -= OnRestoreButtonClicked;
+
+            _enemiesPassedInterface.OnRestartButtonClicked -= OnRestartButtonClicked;
+
+            _pauseInterface.OnRestartButtonClicked -= OnRestartButtonClicked;
+            _pauseInterface.OnContinueButtonClicked -= OnResumeButtonClicked;
+            _pauseInterface.OnStoreButtonClicked -= OnStoreButtonClicked;
         }
 
         private void OnPlayerHealthChanged()
         {
-            _gameInterface.SetHealth(_player.LiveObject.GetLiveComponent<Health>().Amount, _player.LiveObject.GetLiveComponent<Health>().MaxAmount);
+            Health health = _player.LiveObject.GetLiveComponent<Health>();
+            _gameInterface.SetHealth(health.Amount, health.MaxAmount);
+        }
+
+        private void OnPlayerDestroyed()
+        {
+            _ad.ShowAd(CrazyAdType.midgame, Interface.Single<HealthOverInterface>);
+        }
+
+        private void OnPathEnded()
+        {
+            _ad.ShowAd(CrazyAdType.midgame, Interface.Single<EnemiesPassedInterface>);
         }
 
         private void OnEnemyDestroyed()
@@ -110,7 +167,23 @@ namespace SI
 
         private void OnLevelPassed()
         {
-            _endGameInterface.ShowResults(_waveHandler.CountOfWaves, _score.GetTimeScore(_waveHandler.TotalTime));
+            Health health = _player.LiveObject.GetLiveComponent<Health>();
+            _ad.ShowAd(CrazyAdType.midgame, () => _endGameInterface.ShowResults(_waveHandler.CountOfWaves, _score.GetFullScore(_waveHandler.TotalTime, health.MaxAmount - health.Amount)));
+        }
+
+        private void OnPauseButtonClicked()
+        {
+            Interface.Single<PauseInterface>();
+        }
+
+        private void OnStoreButtonClicked()
+        {
+            //Interface.Single<StoreInteface>();
+        }
+
+        private void OnResumeButtonClicked()
+        {
+            Interface.Single<GameInterface>();
         }
 
         private void OnNextLevelButtonClicked()
@@ -125,10 +198,23 @@ namespace SI
             Restart();
         }
 
+        private void OnRestoreButtonClicked()
+        {
+            _ad.ShowAd(CrazyAdType.rewarded, () =>
+            {
+                Interface.Single<GameInterface>();
+                _player.RecreateView();
+            });
+        }
+
         private void MultiplyScore()
         {
-            _score.Add(_score.GetNativeScore());
-            _endGameInterface.ShowResults(_waveHandler.CountOfWaves, _score.GetTimeScore(_waveHandler.TotalTime));
+            _ad.ShowAd(CrazyAdType.rewarded, () =>
+            {
+                _score.Add(_score.GetNativeScore());
+                Health health = _player.LiveObject.GetLiveComponent<Health>();
+                _endGameInterface.ShowResults(_waveHandler.CountOfWaves, _score.GetFullScore(_waveHandler.TotalTime, health.MaxAmount - health.Amount));
+            });
         }
     }
 }

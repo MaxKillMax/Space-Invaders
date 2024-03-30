@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,16 @@ namespace SI.Interfaces.GameInterfaces
     {
         [SerializeField] private Image _healthImage;
         [SerializeField] private Sprite[] _healthSprites;
+        [SerializeField] private Button _pauseButton;
+
+        public event Action OnPauseButtonClicked;
+
+        private void Awake()
+        {
+            _pauseButton.onClick.AddListener(OnPauseButtonClick);
+        }
+
+        private void OnPauseButtonClick() => OnPauseButtonClicked?.Invoke();
 
         public void SetHealth(float health, float maxHealth)
         {
