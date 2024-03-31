@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb250237d3cb324d92c8e452633ba70, type: 3}
-  m_Name: ProjectileData
+  m_Name: DefaultProjectileData
   m_EditorClassIdentifier: 
   _prefab: {fileID: 5460968836097589942, guid: d00f2dd479cc0384e9a85333c0bc0a22, type: 3}
+  _scale: {x: 1, y: 1, z: 1}
   _sprite: {fileID: -696537009, guid: 80685e7cab5de7440beab00a10b51f05, type: 3}
   _healthAction:
     Amount: -10
     TargetTeamIndexs: 01000000
   _speedMultiply: {x: 0, y: 15}
-  _lifeTime: 5
+  _lifeTime: 4

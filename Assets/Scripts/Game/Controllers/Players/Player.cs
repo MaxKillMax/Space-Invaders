@@ -4,25 +4,44 @@ using SI.LiveObjects.LiveComponents.Attacks;
 using SI.LiveObjects.LiveComponents.Healths;
 using SI.LiveObjects.LiveComponents.Movements;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace SI.Controllers.Players
 {
+
     public class Player : MonoBehaviour
     {
         public const string POINTS_KEY = "PLAYER_POINTS";
+
+        private static Player Instance;
 
         [SerializeField] private LiveObjectData _liveObjectData;
         [SerializeField] private Transform _parent;
         [SerializeField] private Vector3 _position;
 
-        public int Points { get; private set; }
+        private static int PPoints;
+        public static int Points
+        {
+            get => PPoints; set
+            {
+                if (PPoints == value)
+                    return;
+
+                PPoints = value;
+                Saving.Save(POINTS_KEY, Points);
+            }
+        }
         public LiveObject LiveObject { get; private set; }
 
         public event Action OnDestroyed;
         public event Action OnHealthChanged;
 
-        private void Awake()
+        public void Initialize()
         {
+            Assert.IsNull(Instance);
+
+            Instance = this;
+
             Points = Saving.Load(POINTS_KEY, out int points) ? points : 0;
         }
 
@@ -55,8 +74,6 @@ namespace SI.Controllers.Players
 
         private void OnDestroy()
         {
-            Saving.Save(POINTS_KEY, Points);
-
             Unsubscribe();
         }
 

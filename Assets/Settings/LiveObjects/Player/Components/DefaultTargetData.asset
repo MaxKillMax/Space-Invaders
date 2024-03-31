@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9b2f3b9ae5174428c8fdcf2ac57cc1, type: 3}
-  m_Name: MovementData
+  m_Script: {fileID: 11500000, guid: e97e4c35e443b3c4ab7ea81bd02fb7a5, type: 3}
+  m_Name: DefaultTargetData
   m_EditorClassIdentifier: 
-  Priority: 0
-  _speed: {x: 4.5, y: 4.5}
-  _bothDirectionsDivider: 1.4
+  InitOrder: -20
+  _teamIndex: 0

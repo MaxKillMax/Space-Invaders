@@ -8,6 +8,8 @@ namespace SI.LiveObjects.LiveComponents.Healths
     {
         [SerializeField] private float _maxHealth = 50;
 
+        public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+
         public override LiveComponent Create(LiveObject liveObject)
         {
             return new Health(new()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 819dc0f6950fd5347b04524938174d61, type: 3}
-  m_Name: HeathData
+  m_Name: DefaultHealthData
   m_EditorClassIdentifier: 
   Priority: 0
   _maxHealth: 50

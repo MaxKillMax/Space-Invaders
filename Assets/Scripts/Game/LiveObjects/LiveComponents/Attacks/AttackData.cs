@@ -10,14 +10,14 @@ namespace SI.LiveObjects.LiveComponents.Attacks
         [SerializeField] private ProjectileData _projectileData;
         [SerializeField] private ClipPack _shootClipPack;
 
-        public override LiveComponent Create(LiveObject liveObject)
+        public ProjectileData ProjectileData { get => _projectileData; set => _projectileData = value; }
+        public ClipPack ClipPack { get => _shootClipPack; set => _shootClipPack = value; }
+
+        public override LiveComponent Create(LiveObject liveObject) => new Attack(new()
         {
-            return new Attack(new()
-            {
-                OriginTransform = liveObject.transform,
-                ProjectileData = _projectileData,
-                ShootClipPack = _shootClipPack
-            });
-        }
+            OriginTransform = liveObject.transform,
+            ProjectileData = _projectileData,
+            ShootClipPack = _shootClipPack
+        });
     }
 }

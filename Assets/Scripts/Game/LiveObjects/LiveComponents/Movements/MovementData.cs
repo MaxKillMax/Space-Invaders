@@ -8,6 +8,8 @@ namespace SI.LiveObjects.LiveComponents.Movements
         [SerializeField] private Vector2 _speed = Vector2.one;
         [SerializeField] private float _bothDirectionsDivider = 1;
 
+        public Vector2 Speed { get => _speed; set => _speed = value; }
+
         public override LiveComponent Create(LiveObject liveObject)
         {
             return new Movement(new()

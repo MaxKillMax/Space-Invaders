@@ -63,3 +63,11 @@ namespace SI.Interfaces.PauseInterfaces
         private void OnMusicToggleValueChanged(bool state) => Sound.SetGroupVolume(_musicKey, state ? 0 : -80);
     }
 }
+
+namespace SI.Interfaces.StoreInterfaces
+{
+    public class StoreInterface : Interface
+    {
+
+    }
+}

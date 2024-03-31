@@ -16,7 +16,7 @@ MonoBehaviour:
   _prefab: {fileID: 1430327926642770127, guid: 0fede357b0eb7df47b2756ed36d5565f, type: 3}
   _sprite: {fileID: -1530161791, guid: 80685e7cab5de7440beab00a10b51f05, type: 3}
   _liveComponentDatas:
-  - {fileID: 11400000, guid: 106203af5d40a1b46ae61bd87cc79a79, type: 2}
-  - {fileID: 11400000, guid: 70fa3d79dd526af43afd36c22101e2f9, type: 2}
-  - {fileID: 11400000, guid: 769cbe8eeae221f469383e333c3b04f4, type: 2}
-  - {fileID: 11400000, guid: 694708632b78eeb4fbc29a4ca359b5be, type: 2}
+  - {fileID: 11400000, guid: 9059582b2977bc84e9230abf09717ee4, type: 2}
+  - {fileID: 11400000, guid: 9596fb3b80812634d84cf790917f3d77, type: 2}
+  - {fileID: 11400000, guid: 0338d07efbd93234ca6b2a4ff87dcb01, type: 2}
+  - {fileID: 11400000, guid: e16b2af82f6ad514b9e373e101a44d39, type: 2}

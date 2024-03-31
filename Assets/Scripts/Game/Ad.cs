@@ -1,16 +1,23 @@
 ﻿using System;
 using CrazyGames;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace SI
 {
     public class Ad : MonoBehaviour
     {
+        private static Ad Instance;
+
         [SerializeField] private CrazyBanner _crazyBanner;
         [SerializeField] private AdWarning _adWarning;
 
         private void Awake()
         {
+            Assert.IsNull(Instance);
+
+            Instance = this;
+
             _crazyBanner.MarkVisible(true);
 
             CrazyAds.Instance?.listenToBannerError(OnBannerError);
@@ -19,7 +26,7 @@ namespace SI
             CrazyAds.Instance?.updateBannersDisplay();
         }
 
-        public void ShowAd(CrazyAdType type, Action onEnded) => _adWarning.Launch(() => CrazyAds.Instance.beginAdBreak(onEnded.Invoke, () =>
+        public static void Show(CrazyAdType type, Action onEnded) => Instance._adWarning.Launch(() => CrazyAds.Instance.beginAdBreak(onEnded.Invoke, () =>
         {
             Debug.LogError("Ad error");
             onEnded.Invoke();

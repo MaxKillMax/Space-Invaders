@@ -12,11 +12,11 @@ namespace SI.Scores
         public const float HEALTH_SCORE_REDUCTION_MULTIPLIER = 2f;
         public const float START_WAVE_SCORE = 15;
 
-        private int _current = START_WAVE_SCORE;
+        private float _current = START_WAVE_SCORE;
 
         public event Action OnUpdated;
 
-        public int GetNativeScore() => _current;
+        public int GetNativeScore() => Mathf.RoundToInt(_current);
 
         public int GetFullScore(float time, float removedHealthsCount)
         {

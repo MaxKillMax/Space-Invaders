@@ -1,10 +1,12 @@
 using CrazyGames;
+using SI.Controllers.Players;
 using SI.Interfaces;
 using SI.Interfaces.EndGameInterfaces;
 using SI.Interfaces.EnemiesPassedInterfaces;
 using SI.Interfaces.GameInterfaces;
 using SI.Interfaces.HealthOverInterfaces;
 using SI.Interfaces.PauseInterfaces;
+using SI.Interfaces.StoreInterfaces;
 using SI.LiveObjects.LiveComponents.Healths;
 using SI.Scores;
 using SI.Sounds;
@@ -18,8 +20,8 @@ namespace SI
         private static Game Instance;
 
         [SerializeField] private Sound _sound;
-        [SerializeField] private Ad _ad;
         [SerializeField] private Backgrounds.Background _background;
+        [SerializeField] private ResearchTree _researchTree;
         [SerializeField] private GameInterface _gameInterface;
         [SerializeField] private EndGameInterface _endGameInterface;
         [SerializeField] private HealthOverInterface _healthOverInterface;
@@ -27,6 +29,7 @@ namespace SI
         [SerializeField] private PauseInterface _pauseInterface;
         [SerializeField] private WaveHandler _waveHandler;
         [SerializeField] private Controllers.Players.Player _player;
+        [SerializeField] private PlayerComponentHandler _componentHandler;
 
         private readonly Score _score = new();
         private readonly Inputs.Input _input = new();
@@ -39,6 +42,9 @@ namespace SI
 
         private void Start()
         {
+            _componentHandler.Initialize();
+            _researchTree.Initialize();
+            _player.Initialize();
             _sound.Initialize();
             _background.Initialize();
 
@@ -152,12 +158,12 @@ namespace SI
 
         private void OnPlayerDestroyed()
         {
-            _ad.ShowAd(CrazyAdType.midgame, Interface.Single<HealthOverInterface>);
+            Ad.Show(CrazyAdType.midgame, Interface.Single<HealthOverInterface>);
         }
 
         private void OnPathEnded()
         {
-            _ad.ShowAd(CrazyAdType.midgame, Interface.Single<EnemiesPassedInterface>);
+            Ad.Show(CrazyAdType.midgame, Interface.Single<EnemiesPassedInterface>);
         }
 
         private void OnEnemyDestroyed()
@@ -168,7 +174,10 @@ namespace SI
         private void OnLevelPassed()
         {
             Health health = _player.LiveObject.GetLiveComponent<Health>();
-            _ad.ShowAd(CrazyAdType.midgame, () => _endGameInterface.ShowResults(_waveHandler.CountOfWaves, _score.GetFullScore(_waveHandler.TotalTime, health.MaxAmount - health.Amount)));
+            int score = _score.GetFullScore(_waveHandler.TotalTime, health.MaxAmount - health.Amount);
+
+            Controllers.Players.Player.Points += score;
+            Ad.Show(CrazyAdType.midgame, () => _endGameInterface.ShowResults(_waveHandler.CountOfWaves, score));
         }
 
         private void OnPauseButtonClicked()
@@ -178,7 +187,7 @@ namespace SI
 
         private void OnStoreButtonClicked()
         {
-            //Interface.Single<StoreInteface>();
+            Interface.Single<StoreInterface>();
         }
 
         private void OnResumeButtonClicked()
@@ -200,7 +209,7 @@ namespace SI
 
         private void OnRestoreButtonClicked()
         {
-            _ad.ShowAd(CrazyAdType.rewarded, () =>
+            Ad.Show(CrazyAdType.rewarded, () =>
             {
                 Interface.Single<GameInterface>();
                 _player.RecreateView();
@@ -209,7 +218,7 @@ namespace SI
 
         private void MultiplyScore()
         {
-            _ad.ShowAd(CrazyAdType.rewarded, () =>
+            Ad.Show(CrazyAdType.rewarded, () =>
             {
                 _score.Add(_score.GetNativeScore());
                 Health health = _player.LiveObject.GetLiveComponent<Health>();

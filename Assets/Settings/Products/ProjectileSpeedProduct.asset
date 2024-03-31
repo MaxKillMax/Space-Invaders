@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e97e4c35e443b3c4ab7ea81bd02fb7a5, type: 3}
-  m_Name: TargetData
+  m_Script: {fileID: 11500000, guid: a4cdd0eb0f962d1438b3cfff368b6782, type: 3}
+  m_Name: ProjectileSpeedProduct
   m_EditorClassIdentifier: 
-  InitOrder: -20
-  _teamIndex: 0
+  _icon: {fileID: 0}
+  _title: Zipper
+  _description: +25% to projectile speed
+  _price: 160
+  _singleTime: 0
+  _speedAddition: {x: 0, y: 4}
